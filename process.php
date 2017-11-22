@@ -7,9 +7,11 @@ define('DBNAME','23136_database');
 
 
 if(isset($_POST['submit']) && strlen($_POST['beschrijving'] < 220))   {
-    $dbc = mysqli_connect(HOST,USER,PASS,DBNAME) or die ('cant connect to the database');
-    $beschrijving = mysqli_real_escape_string($dbc,trim($_POST['beschrijving']));
-    $naam = mysqli_real_escape_string($dbc,trim($_POST['naam']));
+
+    $dbc = new PDO('mysql:host=localhost;dbname=23136_database','root', 'root') or die ('Error connecting to database');
+    $stmt = $dbc->prepare("INSERT INTO gastenboek VALUES(0,'$naam','$beschrijving')");
+    $stmt->bindParam(':naam',$naam);
+    $stmt->bindParam(':beschrijving',$beschrijving);
 
     $beschrijving=htmlspecialchars($_POST['beschrijving']);
     $naam=htmlspecialchars($_POST['naam']);
@@ -18,8 +20,8 @@ if(isset($_POST['submit']) && strlen($_POST['beschrijving'] < 220))   {
     $beschrijving = preg_replace('/\bsukkel\b/',' *******', $beschrijving);
     $naam = preg_replace('/\bsukkel\b/',' *******', $naam);
 
-    $query = "INSERT INTO gastenboek VALUES(0,'$naam','$beschrijving')";
-    $result = mysqli_query($dbc,$query) or die ('cant query');
+
+    $stmt->execute() or die ('cant query');
     echo 'Gelukt!';
 }
 else {
