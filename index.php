@@ -42,7 +42,7 @@ if(isset($_POST['submit']))   {
 
 
 
-$stmt = $dbc->prepare("SELECT * FROM gastenboek");
+$stmt = $dbc->prepare("SELECT * FROM gastenboek ORDER BY id DESC");
 $stmt->execute() or die ('Error quering after PDO');
 while ($row = $stmt->fetch()) {
     $naam = $row['naam'];
