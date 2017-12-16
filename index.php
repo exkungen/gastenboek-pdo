@@ -18,7 +18,7 @@
 
 
 <?php
-$dbc = new PDO('mysql:host=localhost;dbname=23136_database','exkungen', '23136') or die ('Error connecting to database');
+$dbc = new PDO('mysql:host=localhost;dbname=23136_database','root', 'root') or die ('Error connecting to database');
 $stmt = $dbc->prepare("INSERT INTO gastenboek VALUES(?,?,?)");
 $stmt->bindParam(1,$id);
 $stmt->bindParam(2,$naam);
